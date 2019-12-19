@@ -1,0 +1,46 @@
+    <!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<title>Labelun</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+	<script src = "{% static 'js/menu.js'%}" ></script>
+	<link rel="shortcut icon" href="{% static 'img/logo.ico'%}" type="image/x-icon">
+
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="container containter_header">
+				<div class="header_top">
+					<a href="{% url 'main_page'%}" class="logo">
+						<div class="underline"></div>
+						Labelun
+					</a>
+				</div>
+				<div class="header_bottom">
+				</div>
+			</div>
+		</header>
+        <div class="edit">
+        <div class='info'>
+            <p class='user_name'>{{ user.get_full_name }}</p>
+            <img src="{{user.profile.photo}}" alt="Avatar" class = "avatar_info" >
+        </div>
+    <h1>Edit your account</h1>
+    <form action="." method="post" enctype="multipart/form-data">
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+		<p style='font-size:.6rem;font-family:"Open Sans";'>Paste a URL of photo</p>
+        {% csrf_token %}
+        <p><input type="submit" value="Save changes" style="margin-top:1rem;"></p>
+    </form>
+    </div>
+</div>
+</body>
+</html>

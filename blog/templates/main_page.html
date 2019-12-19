@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% load static %}
+<article>
+<div  class="container container_news" id = 'root'><span style="font-size:1.5rem;font-family:'Roboto',sans-serif;">Loading...</span></div>
+</article>
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<script type="text/babel">
+		class Post extends React.Component{
+		  constructor(props) {
+      		super(props);
+      		this.state = {
+				data:[]
+			}
+			this.componentDidMount = this.componentDidMount.bind(this);
+		}
+		componentDidMount() {
+        // Fetch тут
+        fetch("http://127.0.0.1:8000/api/posts/")
+            .then((response) => response.json())
+            .then((response) => {
+				   this.setState({data:response});
+            })
+            .then((error) => {
+                this.setState({false: true});
+                this.setState({error});
+            })
+		}
+    	render(){
+			let ListContent;
+			if(this.state.data){
+			ListContent = (
+			   this.state.data.map((block,index)=>{
+				var url='http://127.0.0.1:8000/'+block.slug;
+				var dates =JSON.parse(block.body);
+				console.log(dates);
+				var counter = 0;
+				var image = dates.blocks.map((block,index)=>{
+					if(block.type == 'image' && counter == 0){
+						counter++;
+					   return <div className="news_image"><img key={index} src={block.data.url} alt={block.data.caption}/></div>
+				   }
+				})
+			   return (<div key = {index} className="news_1 news">
+				   		{image}
+        				<h3 className="news_h3">{block.title}</h3>
+        				<a href={url} className="news_a">learn more</a>
+    			   </div>)
+				})
+			)}
+        	return(<div className="container container_news">{ListContent}</div>);
+    	}
+		}
+	ReactDOM.render(<Post />, document.getElementById('root'));
+	</script>
+{% endblock %}

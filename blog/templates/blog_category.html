@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<title>Labelun</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+	<script src = "{% static 'js/menu.js'%}" ></script>
+	<link rel="shortcut icon" href="{% static 'img/logo.ico'%}" type="image/x-icon">
+
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="container containter_header">
+				<div class="header_top">
+					<a href="{% url 'main_page'%}" class="logo">
+						<div class="underline"></div>
+						Labelun
+					</a>
+					<div class="header_top_right">
+					        {% if user.is_authenticated %}
+								<a href="{% url 'write_a_story' %}" class="btn_write_a_story">
+									Write a story
+								</a>
+							<div class="header_avatar" onclick = "menu()">
+							<img src="{{user.profile.photo}}" alt="Avatar" class="avatar_header" >
+							<div class="dropdown-child" id ="menu">
+								<div class="dropdown_wrapper">
+									<img src="{{user.profile.photo}}" alt="Avatar" class = "avatar_menu">
+									<div class="wrapper_person">
+										<p style="font-weight:600;">{{ user.get_full_name }}</p>
+										<p>@{{ user.get_username }}</p>
+									</div>
+								</div>
+								<a href="">Stories</a>
+								<a href="">Help</a>
+								<a href="http://127.0.0.1:8000/edit/">Settings</a>
+								<a href="http://127.0.0.1:8000/logout">Log out</a>
+							</div>
+						</div> 
+        					{% else %}
+        						<a style = 'margin-top:2rem;' class="btn_write_a_story" href="http://127.0.0.1:8000/login">Login</a>
+								<a style = 'margin-top:2rem;' class="btn_write_a_story" href="http://127.0.0.1:8000/register">Register</a>
+        					{% endif %}
+
+
+					</div>
+				</div>
+				<div class="header_bottom">
+					<nav>
+						<ul class="nav">
+						
+							<li class="nav_li"><a href="{% url 'main_page'%}" class="nav_li_a active">Latest</a></li>
+							{% for category in categories %}						
+							<li class="nav_li"><a href="{% url 'blog_category' category.name %}" class="nav_li_a">{{ category.name }}</a></li>
+							{% endfor %}							
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+        <div class="container container_news">
+         <h1 style='margin-top:10rem;'><span style='font-weight:400;'>Category:</span> <span class='active' style='text-decoration:underline;'>{{category}}</span></h1>
+        </div>
+        <div class="container container_news" style='margin-top:1rem;'>
+       
+        {% for post in posts %}
+            <div class="news_1 news">
+		        <div class="news_image"></div>
+		        <h3 class="news_h3">{{post.title}}</h3>
+		        <a href="{% url 'post' post.slug%}" class="news_a">learn more</a>
+	</div>
+        {% endfor %}
+        </div>
+</div>
+        <footer>
+		<div class="container">
+			<h1 class="footer_h1"><div class="footer_before"></div>Labelun<div class="footer_after"></div></h1>
+			<section class="footer_section">
+				<div class="footer_section_left">
+					<ul class="left_ul">
+						<li class="left_ul-li"><a href="" class="footer_ul-a">About</a></li>
+						<li class="left_ul-li"><a href="" class="footer_ul-a">Map</a></li>
+						<li class="left_ul-li"><a href="" class="footer_ul-a">Terms</a></li>
+					</ul>
+				</div>
+				<div class="footer_section_right">
+					<a href="" class="footer_section_right-a">Instagram<i class="fab footer_icons fa-instagram"></i></a>
+					<a href="" class="footer_section_right-a">GitHub<i class="fab footer_icons fa-github-square"></i></a>
+					<a href="" class="footer_section_right-a">Facebook<i class="fab footer_icons fa-facebook-square"></i></a>				
+				</div>
+			</section>
+			<section class="footer_reserved">
+				<p>Dolore dolor amet voluptatibus ut, libero, esse atque harum </p>
+				<p>© Labelun All rights reserved</p>
+			</section>
+		</div>
+	</footer>
+</body>
+</html>

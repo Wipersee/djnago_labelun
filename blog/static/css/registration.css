@@ -1,0 +1,162 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+.container_left{
+	width:85%;
+	margin:3rem auto;
+}
+.helptext{
+	display:none;
+}
+label{
+	color:#333;
+font-family: "Roboto",sans-serif;
+font-weight: 300;
+font-size: 2rem;
+}
+#id_username,#id_password1,#id_password2,#id_password,#id_first_name,#id_email,#id_last_name{
+	width: 100%;
+height: 2.5rem;
+margin-bottom: 1.5rem;
+}
+.left{
+	width:40%;
+	background-image: url(../img/registration.jpg);
+	background-size: cover;
+	z-index:5;
+}
+.left_mask{
+	width:40%;
+	height:100vh;
+	background: #000;
+	opacity: 0.4;
+	position: absolute;
+	top:0;left:0;
+	display: inline-block;
+	z-index: -1;
+}
+.right{
+	width:60%;
+}
+.main{
+	display:flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	min-height: 100vh;
+}
+.left_logo{
+	font-family:"Open Sans", sans-serif;
+	font-weight: 300;
+	font-size:2.2rem;
+	color:#fff;
+	width:70%;
+	text-decoration: none;
+}
+.underline{
+	height:1.5px;
+	background: #f1f1f1;
+	position:relative;
+	top:1.5rem;
+	z-index: 10000;
+	width:8.2rem;
+}
+.left_paragph{
+	color:#fff;
+	font-size:2rem;
+	font-weight: 300;
+	font-family: "Roboto",sans-serif;
+	margin:7.5rem auto;
+	width:80%;
+}
+.container_right{
+	margin:5rem auto;
+	width:65%;
+}
+.right_h1{
+	color:#333;
+	font-family: "Open Sans",sans-serif;
+	font-weight:700;
+	text-align: center;
+	font-size: 2.8rem;
+}
+.form_h4 {
+	color:#333;
+	font-family: "Roboto",sans-serif;
+	font-weight: 300;
+	font-size: 2rem;
+}
+.form_input{
+	width:100%;
+	height:2.5rem;
+	margin-bottom:1.5rem;
+	border:1px slid rgba(0,0,0,0.5);
+}
+.form_btn{
+	background: #000;
+	color: #fff;
+	text-align: center;
+	font-family: "Open Sans",sans-serif;
+	font-size: 1.5rem;
+	font-weight: 700;
+	width: 100%;
+	height: 3rem;
+	border:none;
+	transition: all 300ms linear;
+	cursor: pointer;
+	border-radius:.2rem;
+}
+#invalid{
+	height: 4rem;
+	width: 7rem;
+	position: fixed;
+	top: 5rem;
+	right: 2rem;
+	border: 1px solid #f5c6cb;
+	border-radius: 10px;
+	color: #721c24;
+	background: #f8d7da;
+	padding: .2rem;
+	display:none;
+}
+.active{
+	animation-name: menuOpen;
+	animation-duration: 1s;
+}
+.hidden{
+	animation-name: menuClose;
+	animation-duration: 1s;
+}
+#invalid p{
+	font-family: "Roboto",sans-serif;
+	text-align: center;
+	font-size:1.2rem;
+}
+#invalid i{
+	font-size:1.4rem;
+}
+@keyframes menuOpen {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes menuClose {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(140%);
+	}
+}
+@media screen and (max-width: 480px){
+	.left{
+		display: none;
+	}
+	.right{
+		width: 100%;
+	}
+}

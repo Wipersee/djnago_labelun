@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Registration</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/normilize.css'%}">
+	<link rel="stylesheet" href="{% static 'css/registration.css'%}">
+	<link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+	<script src="{% static 'js/registration_script.js'%}"></script>
+	<link rel="shortcut icon" href="{% static 'img/logo.ico'%}" type="image/x-icon">
+</head>
+<body>
+	<section class="main">
+		<div class="left">			
+			<div class="container_left">				
+				<a href="{% url 'main_page' %}" class="left_logo">
+					<div class="underline"></div>
+					Labelun
+				</a>
+				<p class="left_paragph">
+					Thousands of stories right here and right now.
+				</p>
+
+			</div>
+			<div class="left_mask"></div>	
+		</div>
+		<div class="right">
+			<div class="container_right">
+				<div id="invalid" >
+					<i class="fas fa-times"></i>
+					<p id ="invalid_p"></p>
+				</div>
+				<h1 class="right_h1">Enter your account</h1>
+				    <form action="" method="post" style='margin-top:10rem'>
+                        {% csrf_token %}
+                        <!-- as_p для того, чтобы каждый элемент формы был с новой строки -->
+                        {{ form.as_p }}
+                    <button type="submit" class="form_btn">Enter</button>
+                    </form>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

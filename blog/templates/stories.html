@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<title>Labelun</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/normilize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+	<script src = "{% static 'js/menu.js'%}" ></script>
+	<link rel="shortcut icon" href="{% static 'img/logo.ico'%}" type="image/x-icon">
+	<link rel="stylesheet" href="{% static 'css/comments.css'%}">
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="container containter_header">
+				<div class="header_top">
+					<a href="{% url 'main_page'%}" class="logo">
+						<div class="underline"></div>
+						Labelun
+					</a>
+				</div>
+				<div class="header_bottom">
+				</div>
+			</div>
+		</header>
+
+		<div class='info' style='margin:10rem auto;margin-bottom:0;width:60%;'>
+            <p class='user_name'>{{user.get_full_name}}</p>
+            <img src="{{user.profile.photo}}" alt="Avatar" class = "avatar_info" >
+
+        </div>
+			<h5 class="your_stories" >Your stories:</h5>
+       <div id='root'><span style="font-size:1.5rem;font-family:'Roboto',sans-serif;">Loading...</span></div>
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	
+	<script type="text/babel">
+		class Post extends React.Component{
+		  constructor(props) {
+      		super(props);
+      		this.state = {
+				data:[]
+			}
+			this.componentDidMount = this.componentDidMount.bind(this);
+			this.delet = this.delet.bind(this);
+		}
+		componentDidMount() {
+        var user = {{user.pk}}-1;
+        fetch("http://127.0.0.1:8000/api_users/posts/"+user+"/")
+            .then((response) => response.json())
+            .then((response) => {
+				   this.setState({data:response.posts});
+				   console.log(this.state.data)
+            })
+            .then((error) => {
+                this.setState({false: true});
+                this.setState({error});
+            })
+		}
+		delet(slug){
+			var user = {{user.pk}}-1;
+			var url = 'http://127.0.0.1:8000/api_users/posts/'+user+'/'+slug+'/';
+			fetch(url, {
+            method: 'DELETE',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{csrf_token}}',
+                      },
+        			})
+		}
+    	render(){
+			let ListContent;
+			if(this.state.data){
+			ListContent = (
+			   this.state.data.map((block,index)=>{
+				   return(<div key={index} className="comment">
+				   			<h3 key={index}>{block.title}</h3>
+				        	<form method="delete">
+								<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"/>
+								<button onClick={() => this.delet(block.slug)}>DELETE</button>
+                			</form>
+				   		  </div>)
+				})
+			)}
+        	return(<div className="container container_news">{ListContent}</div>);
+    	}
+		}
+	ReactDOM.render(<Post />, document.getElementById('root'));
+	</script>
+</body>
+</html>

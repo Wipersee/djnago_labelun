@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block page_content %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'css/comments.css'%}">
+    <div class="container comments">
+    <h4 class='comment_h3'>Showing comments for:</h4>
+    <a class = 'post comment' href='{% url 'post' post.slug%}'>
+        <p class='title'>{{post.title}}</p>
+        <p class='author'>Din Lester</p>
+    </a>
+    {% if user.is_authenticated %}
+<h5 class='comment_h3'>Write a comment:</h5>
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+          {{ form.author }}
+          {{ form.body }}
+        <button class='submit' type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {% else %}
+    <h1 class="comment_h3" style="text-align:center;font-size:1.2rem;">Login to create a comment</h1>
+    {% endif %}
+<h3 class="comment_h3">Comments:</h3>
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="comments_header">
+                <p style="color:#03a87c;">{{ comment.author }}</p>
+                {% comment %} <!--a href="{% url 'user_profile' comment.author post.slug %}"> {{ comment.author }}</a--> {% endcomment %}
+                <p>{{comment.created_on.date }}</p>
+            </div>
+            <div class="comment_body">{{ comment.body }}</div>
+        </div>
+    {% endfor %}
+</div>
+<script> 
+var a = document.getElementById('id_author');
+a.value = '{{user.get_username}}';
+</script>
+{% endblock %}

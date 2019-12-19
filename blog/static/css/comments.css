@@ -1,0 +1,63 @@
+.comments{
+    margin-top:15rem;
+}
+.comment{
+    width:50%;
+    margin:2rem auto;
+    border:1px solid rgba(0,0,0,.09);
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    border-radius:3px;
+    padding:1rem;
+}
+.comments_header p{
+    font-family:'Roboto', sans-serif;
+    font-size:1rem;
+    color:#333;
+}
+.comment_body{
+    margin-top:.5rem;
+    font-family:'Open Sans', sans-serif;
+    font-size:1.5rem;
+    color:#333;
+}
+.green{
+    color:#03a87c;
+}
+.comment_h3{
+    font-size: 16px;
+    color:rgba(0,0,0,.68);
+}
+.form{
+    width:50%;
+    margin:2rem auto;
+    border:1px solid rgba(0,0,0,.09);
+    box-shadow: 5px 5px 10px rgba(0,0,0,.04);
+    border-radius:3px;
+    padding:1rem;
+}
+#id_body{
+    width:100%;
+}
+#id_author{
+    width:25%;
+    margin-right:.1rem;
+    display:none;
+}
+.submit{
+    margin-top:.5rem;
+}
+.author{
+    margin-top:.5rem;
+    color:rgba(0,0,0,.54);
+    font-family:'Roboto', sans-serif;
+    font-size:.9rem;
+}
+.post{
+    display:block;
+    text-decoration: none;
+}
+.title{
+    font-family:'Open Sans', sans-serif;
+    font-size:1.5rem;
+    color:#333;
+}

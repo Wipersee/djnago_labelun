@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block page_content %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'css/post.css'%}">
+<div class="container">
+	<article>
+        <div class="author">
+			<div style ="max-width: 4rem;" class="header_avatar">
+				<img style="height: 3.5rem;" src="{{post.user.photo}}" alt="Avatar">
+			</div>
+			<div class="author_text">
+				<p class="author_name">
+					@{{post.user}}
+				</p>
+				<p class="author_name author_date">{{post.created_on}}</p>
+			</div>
+		</div>
+		<h1 class="topic">{{post.title}}</h1>
+		<div id="root"><span style="font-size:1.5rem;font-family:'Roboto',sans-serif;">Loading...</span></div>
+		<div class="social_icons">
+			<i class="si fab fa-twitter"></i>
+			<i class="si fab fa-facebook-f"></i>
+		</div>
+		<div class="article_underline"></div>
+		<a href="{% url 'comments' post.slug%}" class="article_comments">See responses</a>
+    </article>
+	<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin defer></script>
+	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+	<script type="text/babel">
+	class Post extends React.Component{
+		  constructor(props) {
+      		super(props);
+      		this.state = {
+				data:[]
+			}
+			this.componentDidMount = this.componentDidMount.bind(this);
+		}
+		componentDidMount() {
+        // Fetch тут
+        fetch("http://127.0.0.1:8000/api/posts/{{post.slug}}/")
+            .then((response) => response.json())
+            .then((response) => {
+				   this.setState({data:JSON.parse(response.post[0].body).blocks});
+				   console.log(this.state.data);
+            })
+            .then((error) => {
+                this.setState({false: true});
+                this.setState({error});
+            })
+		}
+    	render(){
+			let ListContent;
+			console.log(this.state.data);
+			if(this.state.data){
+			ListContent = (
+			   this.state.data.map((block,index)=>{
+				   if(block.type == 'paragraph'){
+					   return <p className="article_p" key={index}>{block.data.text}</p>
+				   }
+				   if(block.type == 'image'){
+					   return <img  className="article_img" key={index} src={block.data.url} alt={block.data.caption}/>
+				   }
+				   if(block.type == 'header'){
+					   return <h3 className="topic" key={index}>{block.data.text}</h3>
+				   }
+				   if(block.type='list'){
+					    let list = block.data.items.map((li,index)=>{
+						  return <li key={index}>{li}</li>
+						})
+					   return(<ol key={index} class='ol'>{list}</ol>)
+				   }
+				})
+			)}
+        	return(<div>{ListContent}</div>);
+    	}
+		}
+	ReactDOM.render(<Post />, document.getElementById('root'));
+	</script>
+{% endblock %}
